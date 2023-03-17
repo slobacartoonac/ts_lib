@@ -1,0 +1,17 @@
+{
+    "require": "ts-node/register",
+    "spec": "tests/**/*.ts",
+    "timeout": 10000,
+    "exit": true,
+    "recursive": true,
+    "extension": [
+        "ts"
+    ],
+    "env": {
+        "TS_NODE_PROJECT": "tsconfig.json",
+        "TS_NODE_COMPILER_OPTIONS": {
+            "module": "commonjs",
+            "target": "es6"
+        }
+    }
+}
