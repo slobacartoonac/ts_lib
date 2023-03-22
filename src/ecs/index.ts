@@ -57,17 +57,18 @@ class EntityManager {
         this.free_indices.push(index);
     }
 
-    public asign(component: any, e: Entity): void {
+    public asign(component: any, e: Entity =  this.create()): Entity {
+
         let entity_components = this.components.get(e.id);
         if (!entity_components) {
             this.components.set(e.id, new Map([[component.constructor.name, [component]]]));
-            return;
+            return e;
         }
         let components_of_type = entity_components.get(component.constructor.name);
         if (!components_of_type) {
             let elComponents = this.components.get(e.id)!;
             elComponents.set(component.constructor.name, [component]);
-            return;
+            return e;
         }
         if (components_of_type &&
             entity_components.get(component.constructor.name)
@@ -75,6 +76,7 @@ class EntityManager {
         )
             throw Error('Component is allready asiged');
         entity_components.get(component.constructor.name)!.push(component);
+        return e;
     }
 
     public get(c_type: any, e: Entity): any[] {
