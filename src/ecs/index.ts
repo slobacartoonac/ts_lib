@@ -7,9 +7,11 @@ const MINIMUM_FREE_INDICES = 0;
 
 class Entity {
     id: number;
+    manager: EntityManager
 
-    constructor(id: number) {
+    constructor(id: number, manager: EntityManager) {
         this.id = id;
+        this.manager = manager;
     }
 
     index(): number {
@@ -18,6 +20,26 @@ class Entity {
 
     generation(): number {
         return (this.id >> ENTITY_INDEX_BITS) & ENTITY_GENERATION_MASK;
+    }
+
+    public alive(): boolean {
+        return this.manager.alive(this)
+    }
+
+    public destroy(): void {
+        this.manager.destroy(this)
+    }
+
+    public asign(component: any): Entity {
+        return this.manager.asign(component, this)
+    }
+
+    public get(c_type: any): any[] {
+        return this.manager.get(c_type, this);
+    }
+
+    public remove(component: any): void {
+        this.manager.remove(component, this);
     }
 }
 
@@ -41,7 +63,7 @@ class EntityManager {
     }
 
     private make_entity(idx: number, generation: number): Entity {
-        return new Entity(idx + (generation << ENTITY_INDEX_BITS));
+        return new Entity(idx + (generation << ENTITY_INDEX_BITS), this);
     }
 
     public alive(e: Entity): boolean {
