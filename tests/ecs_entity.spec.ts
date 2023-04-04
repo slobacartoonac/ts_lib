@@ -86,10 +86,10 @@ describe('EntityManager by entity', function () {
 		var entity1 = manager.create()
 		var entity2 = manager.create()
 		entity0.asign(new Component(2))
-		entity2.asign(new Component(2))
-		entity2.asign(new ComponentB(2))
+		entity2.asign(new Component(2)).asign(new ComponentB(2))
 		entity1.asign(new ComponentB(2))
 		assert.equal(manager.getEnities(Component).length, 2)
+		assert.equal(manager.getEnities(ComponentB).length, 2)
 	})
 })
 
