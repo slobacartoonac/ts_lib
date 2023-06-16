@@ -100,7 +100,7 @@ export function getWordWeightedDifference(word1: string, word2: string, weights?
     let closestIndex = -1;
   
     for (let i = 0; i < secondString.length; i++) {
-      if (secondString[i] === target) {
+      if (secondString[i].toLowerCase() === target.toLowerCase()) {
         const diff = Math.abs(firstIndex - i);
         if (diff < minDiff) {
           minDiff = diff;
