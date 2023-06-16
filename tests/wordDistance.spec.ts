@@ -62,7 +62,14 @@ describe('wordWeightedDistance', function () {
 	it('distance multiple letters test extra', function () {
 
 		const tests = [
-		['peica','perica', 0.2],
+		['o','Motor', 0.933],
+		['ot','Motor', 0.46],
+		['oto','Motor', 0.31],
+		['otor','Motor', 0.23],
+		['omo','Motor', 0.62],
+		['omot','Motor', 0.47],
+		['omoto','Motor', 0.37],
+		['omotor','Motor', 0.37],
 	]
 		for(let [first, second, expect] of tests){
 			let val = getWordWeightedDifference(first as string, second as string)

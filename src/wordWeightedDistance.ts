@@ -21,10 +21,16 @@ export function getWordWeightedDifference(word1: string, word2: string, weights?
           weightedDifference += caseWeight; // case difference
           continue
         }
-        const [difIndex, dist] = findClosestIndexAndDif(word1, word2 ,i)
+        const [close1, close2, dist] = findClosestIndexAndDif(word1, word2 ,i)
         let minPosDist = 1
-        if(difIndex > -1){
-          let newShift = difIndex - i
+        if(close1 > -1){
+          let newShift = close1 - i
+          if(close2 > -1){
+            let newShift2 = close2 - i
+            if(newShift2 == lastShift){
+              newShift = newShift2
+            }
+          }
           if(lastShift !== newShift){
             minPosDist = 1 - 1/(dist/2+1)
             lastShift = newShift
@@ -94,20 +100,25 @@ export function getWordWeightedDifference(word1: string, word2: string, weights?
   }
 
 
-  function findClosestIndexAndDif(firstString: string, secondString: string, firstIndex: number): [number, number] {
+  function findClosestIndexAndDif(firstString: string, secondString: string, firstIndex: number): [number, number, number] {
     const target = firstString[firstIndex];
     let minDiff = Infinity;
     let closestIndex = -1;
+    let closestIndex1 = -1
   
     for (let i = 0; i < secondString.length; i++) {
       if (secondString[i].toLowerCase() === target.toLowerCase()) {
         const diff = Math.abs(firstIndex - i);
+        if(diff == minDiff){
+          closestIndex1 = i
+        } else
         if (diff < minDiff) {
           minDiff = diff;
           closestIndex = i;
+          closestIndex1 = -1
         }
       }
     }
   
-    return [closestIndex, minDiff];
+    return [closestIndex, closestIndex1, minDiff];
   }
