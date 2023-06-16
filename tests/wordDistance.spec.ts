@@ -32,9 +32,9 @@ describe('wordWeightedDistance', function () {
 
 		const tests = [['wow','zow', 0.33],
 		['tom','ton', 0.44],
-		['perica','perjanica', 0.56],
-		['trapezoid','gorgonzola', 1.4],
-		['gorgonzola','trapezoid', 1.34],
+		['perica','perjanica', 0.35],
+		['trapezoid','gorgonzola', 1.27],
+		['gorgonzola','trapezoid', 1.269],
 		['otorinolaringologija','tra', 1.38],
 		['mislilac','florida', 1.04],
 		['fore','froe', 0.52],
@@ -44,12 +44,25 @@ describe('wordWeightedDistance', function () {
 		['marica','milica', 0.53],
 		['perica','perica', 0],
 		['peirca','perica', 0.33],
-		['peica','perica', 0.61],
-		['perica','peica', 0.74],
+		['peica','perica', 0.2],
+		['peica','perice', 0.52],
+		['perica','peica', 0.55],
 		['oeri','perica', 0.333],
 		['oeric','perica', 0.266],
 		['oerica','perica', 0.222],
-		['oriica','perica', 0.5],
+		['oriica','perica', 0.33],
+		['perica','dzigerica', 0.85],
+	]
+		for(let [first, second, expect] of tests){
+			let val = getWordWeightedDifference(first as string, second as string)
+			assert.ok(Math.abs(val- (expect as number))<0.03,first+' '+second + ' e: '+ expect+' v: '+val)
+		}
+	})
+
+	it('distance multiple letters test extra', function () {
+
+		const tests = [
+		['peica','perica', 0.2],
 	]
 		for(let [first, second, expect] of tests){
 			let val = getWordWeightedDifference(first as string, second as string)

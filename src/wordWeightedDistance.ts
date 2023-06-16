@@ -11,20 +11,30 @@ export function getWordWeightedDifference(word1: string, word2: string, weights?
     const caseWeight = weights?.case || 0.1
     const positionWeight = weights?.position || 1
     const keyboardDistanceWeight = weights?.keyboardDistance || 1
-  
+    let lastShift = 0
     for (let i = 0; i < minLength; i++) {
       const letter1 = word1[i] || '';
       const letter2 = word2[i] || '';
-  
+
       if (letter1 !== letter2) {
         if (letter1.toLowerCase() === letter2.toLowerCase()) {
           weightedDifference += caseWeight; // case difference
           continue
         }
-        const [_, dist] = findClosestIndexAndDif(word1, word2 ,i)
+        const [difIndex, dist] = findClosestIndexAndDif(word1, word2 ,i)
         let minPosDist = 1
-        if(dist > -1){
-          minPosDist = 1 - 1/(dist/2+1)
+        if(difIndex > -1){
+          let newShift = difIndex - i
+          if(lastShift !== newShift){
+            minPosDist = 1 - 1/(dist/2+1)
+            lastShift = newShift
+          }
+          else {
+            minPosDist = 0
+            continue
+          }
+        } else {
+          lastShift = 0
         }
         weightedDifference += minPosDist * positionWeight; // letter position switch
         const keyboardDistance = getKeyboardDistance(word1[i], word2[i]); // letter keyboard distance
