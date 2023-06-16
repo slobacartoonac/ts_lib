@@ -1,7 +1,7 @@
 {
   "name": "ecs",
   "mode": "development",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "description": "\"Type safe ecs\"",
   "files": [
     "lib"

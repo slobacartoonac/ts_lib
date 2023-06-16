@@ -1,2 +1,3 @@
 import { EntityManager, Entity } from "./ecs";
-export { EntityManager, Entity } 
+import { getKeyboardDistance, getWordWeightedDifference} from "./wordWeightedDistance";
+export { EntityManager, Entity, getKeyboardDistance, getWordWeightedDifference } 
